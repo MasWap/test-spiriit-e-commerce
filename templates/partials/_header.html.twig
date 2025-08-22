@@ -19,9 +19,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <!-- Lien vers le panier & affichage dynamique du nombre d'articles -->
+                        <a class="nav-link" href="{{ path('app_panier') }}">
                             <i class="fas fa-shopping-cart me-1"></i>Panier
-                            <span class="badge bg-primary ms-1">0</span>
+                            <span class="badge bg-primary ms-1">{{ panier_count() }}</span>
                         </a>
                     </li>
                 </ul>

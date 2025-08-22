@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier - LAYRAC Guitar Shop{% endblock %}
+
+{% block body %}
+<div class="container mt-4" style="min-height: 55vh;">
+    {% if items is empty %}
+        <div class="d-flex align-items-center justify-content-center h-100">
+            <div class="text-center">
+                <div class="mb-4">
+                    <i class="fas fa-shopping-cart fa-5x text-muted"></i>
+                </div>
+                <h2 class="mb-3 text-muted">Votre panier est vide</h2>
+                <p class="lead text-muted mb-4">
+                    Découvrez notre collection exceptionnelle de guitares signatures
+                </p>
+                <a href="{{ path('app_accueil') }}#produits" class="btn btn-primary btn-lg" >
+                    <i class="fas fa-guitar me-2"></i>Découvrir nos guitares
+                </a>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-lg-8">
+                <h2 class="mb-4">
+                    <i class="fas fa-shopping-cart me-2"></i>Mon Panier
+                </h2>
+                <!-- Liste des articles dans le panier -->
+                {% for item in items %}
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-2 text-center">
+                                    <i class="fas fa-guitar fa-3x text-primary"></i>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6 class="mb-1 fw-bold">{{ item.produit.nom }}</h6>
+                                    <p class="text-muted mb-0">Prix unitaire : {{ item.produit.prix|number_format(2, ',', ' ') }} €</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label small text-muted">Quantité</label>
+                                    <!-- Formulaire pour modifier la quantité et actualiser le panier -->
+                                    <form method="post" action="{{ path('app_panier_modifier', {id: item.produit.id}) }}" class="d-inline">
+                                        <div class="input-group input-group-sm" style="width: 120px;">
+                                            <button type="button" class="btn btn-outline-secondary" onclick="decreaseCartQuantity({{ item.produit.id }})">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number" name="quantite" class="form-control text-center" 
+                                                    value="{{ item.quantite }}" min="1" max="50" 
+                                                    id="quantity-{{ item.produit.id }}"
+                                                    onchange="this.form.submit()">
+                                            <button type="button" class="btn btn-outline-secondary" onclick="increaseCartQuantity({{ item.produit.id }})">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <p class="text-muted small mb-0">Sous-total</p>
+                                    <strong class="fs-5 text-success">{{ item.sousTotal|number_format(2, ',', ' ') }} €</strong>
+                                </div>
+                                <div class="col-md-1 text-end">
+                                    <!-- Formulaire pour supprimer un article du panier -->
+                                    <form method="post" action="{{ path('app_panier_supprimer', {id: item.produit.id}) }}" class="d-inline">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm" 
+                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')"
+                                                title="Supprimer cet article">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="d-flex justify-content-between align-items-center mt-4 p-3 bg-light rounded">
+                    <div>
+                        <!-- Formulaire pour vider entièrement le panier -->
+                        <form method="post" action="{{ path('app_panier_vider') }}" class="d-inline">
+                            <button type="submit" class="btn btn-outline-danger"
+                                    onclick="return confirm('Êtes-vous sûr de vouloir vider votre panier ?')">
+                                <i class="fas fa-trash me-2"></i>Vider le panier
+                            </button>
+                        </form>
+                    </div>
+                    <div>
+                        <a href="{{ path('app_accueil') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left me-2"></i>Continuer mes achats
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Récapitulatif du panier -->
+            <div class="col-lg-4">
+                <div class="card sticky-top shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-calculator me-2"></i>Récapitulatif
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Sous-total :</span>
+                            <span>{{ total|number_format(2, ',', ' ') }} €</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Livraison :</span>
+                            <!-- Frais de livraison offerts si le panier dépasse 5000 € -->
+                            {% if total >= 5000 %}
+                            <span class="text-success fw-bold">Gratuite</span>
+                            {% else %}
+                            <span class="text-danger fw-bold">+ 120,00 €</span>
+                            {% endif %}
+                        </div>
+                        <small><i>(Livraison gratuite à partir de 5000 €)</i></small>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-3">
+                            <strong class="fs-5">Total :</strong>
+                            {% set totalAvecLivraison = total < 5000 ? total + 120 : total %}
+                            <strong class="fs-4 text-success">{{ totalAvecLivraison|number_format(2, ',', ' ') }} €</strong>
+                        </div>
+                        <button class="btn btn-success w-100 btn-lg">
+                            <i class="fas fa-credit-card me-2"></i>Procéder au paiement
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function increaseCartQuantity(productId) {
+    const input = document.getElementById('quantity-' + productId);
+    if (parseInt(input.value) < 10) {
+        input.value = parseInt(input.value) + 1;
+        input.form.submit();
+    }
+}
+
+function decreaseCartQuantity(productId) {
+    const input = document.getElementById('quantity-' + productId);
+    if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+        input.form.submit();
+    }
+}
+</script>
+{% endblock %}
