@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class AccueilController extends AbstractController
 {
+    # Afficher la page d'accueil
     #[Route('/', name: 'app_accueil')]
     public function index(ProduitRepository $produitRepository): Response
     {
@@ -20,6 +21,7 @@ final class AccueilController extends AbstractController
         ]);
     }
 
+    # Afficher un produit
     #[Route('/produit/{id}', name: 'app_produit_show', requirements: ['id' => '\d+'])]
     public function show(Produit $produit): Response
     {

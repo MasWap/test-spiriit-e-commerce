@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class PanierController extends AbstractController
 {
+    # Afficher le panier
     #[Route('/panier', name: 'app_panier')]
     public function index(PanierRepository $panierRepository, SessionInterface $session): Response
     {
@@ -28,6 +29,7 @@ class PanierController extends AbstractController
         ]);
     }
 
+    # Ajouter un produit au panier
     #[Route('/panier/ajouter/{id}', name: 'app_panier_ajouter', methods: ['POST'])]
     public function ajouter(
         int $id,
@@ -70,6 +72,7 @@ class PanierController extends AbstractController
         return $this->redirectToRoute('app_produit_show', ['id' => $id]);
     }
 
+    # Modifier un produit dans le panier
     #[Route('/panier/modifier/{id}', name: 'app_panier_modifier', methods: ['POST'])]
     public function modifier(
         int $id,
@@ -101,6 +104,7 @@ class PanierController extends AbstractController
         return $this->redirectToRoute('app_panier');
     }
 
+    # Supprimer un produit du panier
     #[Route('/panier/supprimer/{id}', name: 'app_panier_supprimer', methods: ['POST'])]
     public function supprimer(
         int $id,
@@ -120,6 +124,7 @@ class PanierController extends AbstractController
         return $this->redirectToRoute('app_panier');
     }
 
+    # Vider entièrement le panier
     #[Route('/panier/vider', name: 'app_panier_vider', methods: ['POST'])]
     public function vider(
         PanierRepository $panierRepository,

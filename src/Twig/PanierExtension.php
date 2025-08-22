@@ -25,6 +25,7 @@ class PanierExtension extends AbstractExtension
         ];
     }
 
+    # Récupérer le nombre d'articles dans le panier
     public function getPanierCount(): int
     {
         $request = $this->requestStack->getCurrentRequest();

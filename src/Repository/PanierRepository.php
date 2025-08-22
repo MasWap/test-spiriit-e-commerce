@@ -16,6 +16,7 @@ class PanierRepository extends ServiceEntityRepository
         parent::__construct($registry, Panier::class);
     }
 
+    # Récupérer les articles du panier par ID de session
     public function findBySessionId(string $sessionId): array
     {
         return $this->createQueryBuilder('p')
@@ -26,6 +27,7 @@ class PanierRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    # Récupérer un article du panier par ID de session et ID de produit
     public function findItemBySessionAndProduct(string $sessionId, int $produitId): ?Panier
     {
         return $this->createQueryBuilder('p')
@@ -37,6 +39,7 @@ class PanierRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    # Récupérer le total du panier par ID de session
     public function getTotalBySession(string $sessionId): float
     {
         $items = $this->findBySessionId($sessionId);
@@ -49,6 +52,7 @@ class PanierRepository extends ServiceEntityRepository
         return $total;
     }
 
+    # Récupérer le nombre d'articles dans le panier par ID de session
     public function getCountBySession(string $sessionId): int
     {
         return $this->createQueryBuilder('p')
