@@ -53,21 +53,25 @@
                             <div style="flex: 0 0 130px;">
                                 <label for="quantity" class="h5 mb-3">Quantité</label>
                                 <div class="input-group">
-                                    <!-- Bouton pour diminuer la quantité (On fait appel à une fonction JavaScript pour gérer la diminution) -->
+                                    <!-- Bouton pour diminuer la quantité -->
                                     <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">
                                         <i class="fas fa-minus"></i>
                                     </button>
-                                    <input type="number" class="form-control text-center" id="quantity" value="1" min="1" max="9">
-                                    <!-- Bouton pour augmenter la quantité (On fait appel à une fonction JavaScript pour gérer l'augmentation) -->
+                                    <input type="number" class="form-control text-center" id="quantity" value="1" min="1" max="50">
+                                    <!-- Bouton pour augmenter la quantité -->
                                     <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()">
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
                             </div>
                             <div style="flex: 1;">
-                                <button class="btn btn-primary btn-lg w-100">
-                                    <i class="fas fa-cart-plus me-2"></i>Ajouter au panier
-                                </button>
+                                <!-- Bouton permettant l'ajout au panier de l'article en fonction de la quantité choisie -->
+                                <form method="post" action="{{ path('app_panier_ajouter', {id: produit.id}) }}" class="w-100">
+                                    <input type="hidden" name="quantite" id="hidden-quantite" value="1">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                                        <i class="fas fa-cart-plus me-2"></i>Ajouter au panier
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -118,26 +122,30 @@
 // Fonction pour augmenter la quantité
 function increaseQuantity() {
     const quantityInput = document.getElementById('quantity');
+    const hiddenInput = document.getElementById('hidden-quantite');
     const currentValue = parseInt(quantityInput.value);
     const maxValue = parseInt(quantityInput.max);
     
     if (currentValue < maxValue) {
         quantityInput.value = currentValue + 1;
+        hiddenInput.value = quantityInput.value; // Synchroniser avec l'input caché
     }
 }
 
 // Fonction pour diminuer la quantité
 function decreaseQuantity() {
     const quantityInput = document.getElementById('quantity');
+    const hiddenInput = document.getElementById('hidden-quantite');
     const currentValue = parseInt(quantityInput.value);
     const minValue = parseInt(quantityInput.min);
     
     if (currentValue > minValue) {
         quantityInput.value = currentValue - 1;
+        hiddenInput.value = quantityInput.value; // Synchroniser avec l'input caché
     }
 }
 
-// Empêcher la saisie de valeurs invalides
+// Empêcher la saisie de valeurs invalides et synchroniser
 document.getElementById('quantity').addEventListener('input', function() {
     const value = parseInt(this.value);
     const min = parseInt(this.min);
@@ -145,6 +153,16 @@ document.getElementById('quantity').addEventListener('input', function() {
     
     if (value < min) this.value = min;
     if (value > max) this.value = max;
+    
+    // Synchroniser avec l'input caché
+    document.getElementById('hidden-quantite').value = this.value;
+});
+
+// Synchroniser au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    const quantityInput = document.getElementById('quantity');
+    const hiddenInput = document.getElementById('hidden-quantite');
+    hiddenInput.value = quantityInput.value;
 });
 </script>
 {% endblock %}
