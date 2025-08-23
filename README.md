@@ -1,0 +1,202 @@
+# LAYRAC Guitar Shop - E-commerce Symfony - Test technique Spiriit
+
+### Application e-commerce développée avec Symfony 6.4 pour la vente de guitares signatures.
+
+L'application comprends :
+- Un catalogue de produits
+- Une page détaillée pour chaque produit
+- Un système de panier (Stocké en session)
+- Une interface responsive utilisant Bootstrap
+
+## Informations sur l'application
+
+- **Symfony 6.4** - Framework PHP
+- **SQLite** - Base de données
+- **Doctrine ORM** - Mapping objet-relationnel
+- **Webpack Encore** - Gestion des assets
+- **Bootstrap 5.3** - Framework CSS
+- **FontAwesome 6** - Icônes
+- **PHPUnit** - Tests unitaires et fonctionnels
+- **SCSS** - Préprocesseur CSS
+
+## Prérequis
+
+- PHP 8.1 ou supérieur
+- Composer
+- Node.js et npm
+- Extension SQLite pour PHP
+
+## Installation du projet
+
+### 1. Cloner le dépôt
+
+```bash
+git clone <url-du-depot>
+cd test-spiriit-e-commerce
+```
+
+### 2. Installer les dépendances PHP
+
+```bash
+composer install
+```
+
+### 3. Installer les dépendances Node.js
+
+```bash
+npm install
+```
+
+### 4. Configuration de l'environnement
+
+Copiez le fichier `.env` vers `.env.local` et adaptez la configuration si nécessaire :
+
+```bash
+cp .env .env.local
+```
+
+La configuration par défaut utilise SQLite avec le fichier `var/data_dev.db`.
+
+### 5. Créer la base de données
+
+```bash
+php bin/console doctrine:database:create
+```
+
+### 6. Appliquer les migrations
+
+```bash
+php bin/console doctrine:migrations:migrate
+```
+
+## Charger les fixtures
+
+Pour charger les données de démonstration (12 produits) :
+
+```bash
+php bin/console doctrine:fixtures:load
+```
+
+**Attention** : Cette commande supprime toutes les données existantes et recharge les fixtures.
+
+## Compiler les assets
+
+### Compilation unique (production)
+
+```bash
+npm run build
+```
+
+### Compilation en mode développement ou watch pour le hot reload
+
+```bash
+npm run dev
+ou
+npm run watch
+```
+
+## Lancer le projet
+
+### Avec le serveur Symfony CLI (recommandé)
+
+```bash
+symfony server:start
+```
+
+L'application sera disponible sur `https://127.0.0.1:8000`
+
+### Avec le serveur PHP intégré (si vous ne disposez pas du Symfony CLI)
+
+```bash
+php -S localhost:8000 -t public/
+```
+
+L'application sera disponible sur `http://localhost:8000`
+
+## Jouer les tests
+
+### Préparer l'environnement de test
+
+1. **Créer la base de données de test :**
+```bash
+php bin/console doctrine:database:create --env=test
+```
+
+2. **Appliquer les migrations :**
+```bash
+php bin/console doctrine:migrations:migrate --env=test --no-interaction
+```
+
+3. **Charger les fixtures de test :**
+```bash
+php bin/console doctrine:fixtures:load --env=test --no-interaction
+```
+
+### Exécuter les tests
+
+**Tous les tests :**
+```bash
+php bin/phpunit
+```
+
+**Tests unitaires uniquement :**
+```bash
+php bin/phpunit tests/Unit/
+```
+
+**Tests fonctionnels uniquement :**
+```bash
+php bin/phpunit tests/Functional/
+```
+
+**Test spécifique :**
+```bash
+php bin/phpunit tests/Functional/Controller/AccueilControllerTest.php
+```
+
+## Structure du projet
+
+```
+assets/
+├── app.js                   # Point d'entrée JavaScript
+├── styles/           
+│   └── app.scss             # Styles principaux
+└── js/                      # Modules JavaScript
+
+src/
+├── Controller/              # Contrôleurs Symfony
+│   ├── AccueilController.php
+│   └── PanierController.php
+├── DataFixtures/            # Fixtures de données
+├── Entity/                  # Entités Doctrine
+│   ├── Produit.php
+│   └── Panier.php
+├── Repository/              # Repositories Doctrine
+└── Twig/                    # Extensions Twig
+
+templates/
+├── accueil/                 # Templates de l'accueil
+├── panier/                  # Templates du panier
+├── partials/                # Composants réutilisables (header & footer)
+├── produit/                 # Templates du produit
+├── base.html.twig           # Template de base
+
+tests/
+├── Unit/                    # Tests unitaires
+└── Functional/              # Tests fonctionnels
+```
+
+## Commandes utiles
+
+### Base de données
+
+```bash
+# Voir le statut des migrations
+php bin/console doctrine:migrations:status
+
+# Remettre à zéro la base de données
+php bin/console doctrine:database:drop --force
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load
+```
