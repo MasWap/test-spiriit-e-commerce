@@ -1,28 +1,16 @@
 
 services:
   app:
-    image: php:8.1-apache
+    build: .
     container_name: layrac_guitar_shop
     ports:
-      - "8000:80"
+      - "8080:80"
     volumes:
       - .:/var/www/html
+      - sqlite_data:/var/www/html/var
     environment:
+      - APP_ENV=dev
       - DATABASE_URL=sqlite:///var/www/html/var/data.db
-    working_dir: /var/www/html
-    command: >
-      bash -c "
-        apt-get update && 
-        apt-get install -y sqlite3 libsqlite3-dev git unzip curl nodejs npm &&
-        docker-php-ext-install pdo pdo_sqlite &&
-        curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&
-        a2enmod rewrite &&
-        echo '<VirtualHost *:80>
-          DocumentRoot /var/www/html/public
-          <Directory /var/www/html/public>
-            AllowOverride All
-            Require all granted
-          </Directory>
-        </VirtualHost>' > /etc/apache2/sites-available/000-default.conf &&
-        apache2-foreground
-      "
+
+volumes:
+  sqlite_data:
