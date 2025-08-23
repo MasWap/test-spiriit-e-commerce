@@ -4,6 +4,9 @@
 
 import './styles/app.scss';
 
+// Import Bootstrap JavaScript
+import 'bootstrap';
+
 // Import our custom JS modules
 import './js/product';
 import './js/cart';
