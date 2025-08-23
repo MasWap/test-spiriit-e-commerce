@@ -69,7 +69,7 @@ class PanierTest extends TestCase
         $sousTotal = $panier->getSousTotal();
 
         // Assert
-        # Utilisation de assertEquals avec arrondi pour éviter les problèmes de précision flottante
+        # Utilisation de assertEquals avec arrondi pour éviter les problèmes d'arrondis
         $this->assertEquals(3704.97, round($sousTotal, 2));
     }
 }
