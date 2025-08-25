@@ -21,10 +21,11 @@ L'application comprends :
 
 ## Prérequis
 
+- Système d'exploitation Unix avec Docker
 - PHP 8.1 ou supérieur
 - Composer
 - Node.js et npm
-- Extension SQLite pour PHP
+- Extension SQLite, Intl, fileinfo pour PHP
 
 ## Installation du projet
 
