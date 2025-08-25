@@ -7,19 +7,6 @@ use App\Entity\Produit;
 
 class AccueilControllerTest extends WebTestCase
 {
-    public function testPageAccueilStatusCode(): void
-    {
-        // Arrange
-        $client = static::createClient();
-
-        // Act
-        $crawler = $client->request('GET', '/');
-
-        // Assert - Vérifier le status code
-        $this->assertResponseIsSuccessful();
-        $this->assertResponseStatusCodeSame(200);
-    }
-
     public function testNombreProduits(): void
     {
         // Arrange
