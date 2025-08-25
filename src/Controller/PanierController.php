@@ -16,8 +16,9 @@ use Symfony\Component\Routing\Attribute\Route;
 class PanierController extends AbstractController
 {
     #[Route('/panier', name: 'app_panier')]
-    public function index(PanierRepository $panierRepository, SessionInterface $session): Response
+    public function index(PanierRepository $panierRepository, Request $request): Response
     {
+        $session = $request->getSession();
         $sessionId = $session->getId();
         $items = $panierRepository->findBySessionId($sessionId);
         $total = $panierRepository->getTotalBySession($sessionId);
@@ -34,9 +35,15 @@ class PanierController extends AbstractController
         Request $request,
         ProduitRepository $produitRepository,
         PanierRepository $panierRepository,
-        EntityManagerInterface $entityManager,
-        SessionInterface $session
+        EntityManagerInterface $entityManager
     ): Response {
+        $session = $request->getSession();
+        
+        // Marquer la session comme active pour s'assurer qu'elle persiste
+        if (!$session->has('_panier_active')) {
+            $session->set('_panier_active', true);
+        }
+        
         $produit = $produitRepository->find($id);
         
         if (!$produit) {
@@ -64,7 +71,7 @@ class PanierController extends AbstractController
 
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_produit_show', ['id' => $id]);
+        return $this->redirectToRoute('app_produit_show', ['slug' => $produit->getSlug()]);
     }
 
     #[Route('/panier/modifier/{id}', name: 'app_panier_modifier', methods: ['POST'])]
@@ -72,9 +79,9 @@ class PanierController extends AbstractController
         int $id,
         Request $request,
         PanierRepository $panierRepository,
-        EntityManagerInterface $entityManager,
-        SessionInterface $session
+        EntityManagerInterface $entityManager
     ): Response {
+        $session = $request->getSession();
         $sessionId = $session->getId();
         $item = $panierRepository->findItemBySessionAndProduct($sessionId, $id);
 
@@ -98,10 +105,11 @@ class PanierController extends AbstractController
     #[Route('/panier/supprimer/{id}', name: 'app_panier_supprimer', methods: ['POST'])]
     public function supprimer(
         int $id,
+        Request $request,
         PanierRepository $panierRepository,
-        EntityManagerInterface $entityManager,
-        SessionInterface $session
+        EntityManagerInterface $entityManager
     ): Response {
+        $session = $request->getSession();
         $sessionId = $session->getId();
         $item = $panierRepository->findItemBySessionAndProduct($sessionId, $id);
 
@@ -115,10 +123,11 @@ class PanierController extends AbstractController
 
     #[Route('/panier/vider', name: 'app_panier_vider', methods: ['POST'])]
     public function vider(
+        Request $request,
         PanierRepository $panierRepository,
-        EntityManagerInterface $entityManager,
-        SessionInterface $session
+        EntityManagerInterface $entityManager
     ): Response {
+        $session = $request->getSession();
         $sessionId = $session->getId();
         $items = $panierRepository->findBySessionId($sessionId);
 

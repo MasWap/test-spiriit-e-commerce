@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil - LAYRAC Guitar Shop{% endblock %}
+{% block title %}{{ 'site.title'|trans }}{% endblock %}
 
 {% block body %}
 <div class="hero-section bg-gradient text-dark py-5 mb-5">
@@ -8,13 +8,13 @@
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <h1 class="display-4 fw-bold text-white mb-4">
-                    Guitares de Légendes
+                    {{ 'site.tagline'|trans }}
                 </h1>
                 <p class="lead text-white mb-4">
-                    Découvrez notre collection exclusive de guitares signatures des plus grands artistes du rock et du metal.
+                    {{ 'site.description'|trans }}
                 </p>
                 <a href="#produits" class="btn btn-light btn-lg">
-                    <i class="fas fa-guitar me-2"></i>Découvrir nos guitares
+                    <i class="fas fa-guitar me-2"></i>{{ 'nav.discover'|trans }}
                 </a>
             </div>
             <div class="col-lg-6 text-center">
@@ -27,8 +27,8 @@
 <div class="container" id="produits">
     <div class="row mb-5">
         <div class="col-12 text-center">
-            <h2 class="display-5 fw-bold mb-2">Notre Collection</h2>
-            <p class="lead"><strong>{{ produits|length }}</strong> guitares signatures disponibles</p>
+            <h2 class="display-5 fw-bold mb-2">{{ 'home.collection_title'|trans }}</h2>
+            <p class="lead"><strong>{{ produits|length }}</strong> {{ 'home.collection_count'|trans }}</p>
         </div>
     </div>
     
@@ -54,7 +54,7 @@
                         </div>
                         <div class="btn-group">
                             <a href="{{ path('app_produit_show', {slug: produit.slug}) }}" class="btn btn-outline-primary btn-sm">
-                                Voir la fiche
+                                {{ 'product.see_details'|trans }}
                             </a>
                         </div>
                     </div>
@@ -68,8 +68,8 @@
     <div class="row">
         <div class="col-12 text-center py-5">
             <i class="fas fa-guitar text-muted empty-state-icon"></i>
-            <h3 class="mt-3 text-muted">Aucune guitare disponible</h3>
-            <p class="text-muted">Revenez bientôt pour découvrir notre collection !</p>
+            <h3 class="mt-3 text-muted">{{ 'home.empty_state'|trans }}</h3>
+            <p class="text-muted">{{ 'home.empty_message'|trans }}</p>
         </div>
     </div>
     {% endif %}
