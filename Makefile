@@ -47,6 +47,7 @@ start:
 	@echo " |         http://localhost:9000                            |"
 	@echo " ============================================================"
 	@echo ""
+	$(CONN_CONTAINER) npm run dev
 	$(CONN_CONTAINER) php -S 0.0.0.0:8000 -t public
 
 # Arrêter les conteneurs

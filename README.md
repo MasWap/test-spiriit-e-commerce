@@ -35,7 +35,13 @@ git clone <url-du-depot>
 cd test-spiriit-e-commerce
 ```
 
-### 2. Installer les dépendances PHP
+### 1.1 Déploiement automatique avec Docker et le Makefile
+
+```bash
+make start
+```
+
+### SINON 2 Installer les dépendances PHP
 
 ```bash
 composer install
