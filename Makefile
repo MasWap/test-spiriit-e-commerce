@@ -19,9 +19,11 @@ help:
 	@echo "│ make migration       │ Lance les migrations Doctrine                                                 │"
 	@echo "│ make fixtures        │ Charge les fixtures Doctrine                                                  │"
 	@echo "│ make cache-clear     │ Vide le cache Symfony                                                         │"
+	@echo "│ make cache-clean     │ Nettoie le cache de manière agressive                                         │"
 	@echo "│ make test            │ Lance tous les tests                                                          │"
 	@echo "│ make test-unit       │ Lance uniquement les tests unitaires                                          │"
 	@echo "│ make test-func       │ Prépare et lance les tests fonctionnels                                       │"
+	@echo "│ make csv-export      │ Exporte les produits au format CSV                                            │"
 	@echo "└──────────────────────┴───────────────────────────────────────────────────────────────────────────────┘"
 
 start:
@@ -34,6 +36,7 @@ start:
 	@sleep 1
 	@echo "1 ..."
 	@sleep 1
+	make cache-clean
 	$(CONN_CONTAINER) npm install
 	$(CONN_CONTAINER) composer install
 	$(CONN_CONTAINER) php bin/console doctrine:migrations:migrate --no-interaction
@@ -84,6 +87,13 @@ fixtures:
 cache-clear:
 	docker exec -it $(PHP_CONTAINER) php bin/console cache:clear
 
+# Nettoyer le cache de manière agressive (suppression manuelle)
+cache-clean:
+	docker exec -it $(PHP_CONTAINER) rm -rf var/cache/*
+	docker exec -it $(PHP_CONTAINER) rm -rf var/log/*
+	docker exec -it $(PHP_CONTAINER) mkdir -p var/cache var/log
+	docker exec -it $(PHP_CONTAINER) chmod -R 777 var/
+
 # Lancer les tests PHPUnit
 test: test-unit test-func
 	
@@ -96,3 +106,7 @@ test-func:
 	docker exec -it $(PHP_CONTAINER) php bin/console doctrine:migrations:migrate --env=test --no-interaction
 	docker exec -it $(PHP_CONTAINER) php bin/console doctrine:fixtures:load --env=test --no-interaction
 	docker exec -it $(PHP_CONTAINER) php bin/phpunit tests/Functional
+
+# Export des produits au format CSV
+csv-export:
+	docker exec -it $(PHP_CONTAINER) php bin/console app:export-produits

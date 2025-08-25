@@ -43,4 +43,8 @@ RUN git config --global user.email "lilian.layrac@gmail.com" \
 
 WORKDIR /var/www/html/
 
+# Créer les répertoires avec les bonnes permissions
+RUN mkdir -p var/cache var/log var/sessions \
+    && chmod -R 777 var/
+
 CMD tail -f /dev/null
