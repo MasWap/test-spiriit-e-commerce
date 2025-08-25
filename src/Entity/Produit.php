@@ -19,6 +19,9 @@ class Produit
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
 
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
@@ -47,8 +50,34 @@ class Produit
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+        // Génération automatique du slug à partir du nom
+        $this->slug = $this->generateSlug($nom);
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    private function generateSlug(string $text): string
+    {
+        // Convertir en minuscules et remplacer les espaces par des tirets
+        $slug = strtolower($text);
+        // Remplacer les caractères spéciaux
+        $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
+        // Remplacer les espaces par des tirets
+        $slug = preg_replace('/[\s-]+/', '-', $slug);
+        // Supprimer les tirets en début/fin
+        return trim($slug, '-');
     }
 
     public function getDescription(): ?string

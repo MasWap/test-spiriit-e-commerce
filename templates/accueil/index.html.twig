@@ -53,7 +53,7 @@
                             <span class="h4 text-primary fw-bold">{{ produit.prix|number_format(2, ',', ' ') }} €</span>
                         </div>
                         <div class="btn-group">
-                            <a href="{{ path('app_produit_show', {id: produit.id}) }}" class="btn btn-outline-primary btn-sm">
+                            <a href="{{ path('app_produit_show', {slug: produit.slug}) }}" class="btn btn-outline-primary btn-sm">
                                 Voir la fiche
                             </a>
                         </div>
