@@ -1,0 +1,10 @@
+easy_admin:
+    site_name: 'SPIRIIT E-Commerce Admin'
+    
+    design:
+        brand:
+            name: 'SPIRIIT Admin'
+            color: '#1976d2'
+    
+    entities:
+        - App\Entity\Produit

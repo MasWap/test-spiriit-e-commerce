@@ -26,8 +26,14 @@
 
         <!-- Détails du produit -->
         <div class="col-md-6">
-            <h1 class="display-6 fw-bold mb-3">{{ produit.nom }}</h1>
             
+            <div class="d-flex justify-content-between align-items-start mb-3">
+            <h1 class="display-6 fw-bold mb-3">{{ produit.nom }}</h1>
+                <a href="{{ path('admin', {crudAction: 'edit', crudControllerFqcn: 'App\\Controller\\Admin\\ProduitCrudController', entityId: produit.id}) }}" 
+                    class="btn btn-outline-primary btn-sm" title="Modifier le produit ({{ produit.nom }})">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </div>
             <!-- Prix -->
             <div class="price-section mb-4">
                 <span class="h2 text-primary fw-bold">{{ produit.prix|number_format(2, ',', ' ') }} €</span>
