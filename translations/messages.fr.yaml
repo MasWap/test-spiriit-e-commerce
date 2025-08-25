@@ -1,0 +1,38 @@
+# Traductions françaises
+site:
+  title: "LAYRAC Guitar Shop"
+  tagline: "Guitares de Légendes"
+  description: "Découvrez notre collection exclusive de guitares signatures des plus grands artistes du rock et du metal."
+  
+nav:
+  collection: "Collection"
+  cart: "Panier"
+  discover: "Découvrir nos guitares"
+  
+home:
+  collection_title: "Notre Collection"
+  collection_count: "guitares signatures disponibles"
+  empty_state: "Aucune guitare disponible"
+  empty_message: "Revenez bientôt pour découvrir notre collection !"
+  
+product:
+  see_details: "Voir la fiche"
+  free_shipping: "Livraison gratuite"
+  free_shipping_note: "(à partir de 5000€)"
+  description: "Description"
+  quantity: "Quantité"
+  add_to_cart: "Ajouter au panier"
+  edit: "Modifier le produit"
+
+cart:
+  empty_cart: "Votre panier est vide"
+  description: "Découvrez notre collection exclusive de guitares signatures"
+  discover: "Découvrir nos guitares"
+  
+breadcrumb:
+  collection: "Collection"
+  
+footer:
+  description: "Votre boutique spécialisée en guitares signatures des plus grands artistes. Découvrez notre collection exceptionnelle d'instruments de légende à prix attractifs."
+  home: "Accueil"
+  copyright: "© 2025 LAYRAC Guitar Shop. Tous droits réservés."

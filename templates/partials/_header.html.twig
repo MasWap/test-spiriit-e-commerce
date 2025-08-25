@@ -15,13 +15,13 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_accueil') }}">
-                            <i class="fas fa-guitar me-1"></i>Collection
+                            <i class="fas fa-guitar me-1"></i>{{ 'nav.collection'|trans }}
                         </a>
                     </li>
                     <li class="nav-item">
                         <!-- Lien vers le panier & affichage dynamique du nombre d'articles -->
                         <a class="nav-link" href="{{ path('app_panier') }}">
-                            <i class="fas fa-shopping-cart me-1"></i>Panier
+                            <i class="fas fa-shopping-cart me-1"></i>{{ 'nav.cart'|trans }}
                             <span class="badge bg-primary ms-1">{{ panier_count() }}</span>
                         </a>
                     </li>
@@ -29,6 +29,16 @@
                         <a class="nav-link" href="{{ path('admin') }}">
                             <i class="fas fa-cog me-1"></i>Administration
                         </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-globe me-1"></i>
+                            {% if app.request.locale == 'fr' %}🇫🇷 FR{% else %}🇬🇧 EN{% endif %}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ path('app_change_language', {locale: 'fr'}) }}">🇫🇷 Français</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_change_language', {locale: 'en'}) }}">🇬🇧 English</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>

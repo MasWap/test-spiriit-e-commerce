@@ -6,16 +6,15 @@
                     <i class="fas fa-guitar me-2"></i>LAYRAC Guitar Shop
                 </h5>
                 <p class="text-decoration-none">
-                    Votre boutique spécialisée en guitares signatures des plus grands artistes. 
-                    Découvrez notre collection exceptionnelle d'instruments de légende à prix attractifs.
+                    {{ 'footer.description'|trans }}
                 </p>
             </div>
             
             <div class="col-md-3">
                 <h5 class="mb-3">Navigation</h5>
                 <ul class="list-unstyled">
-                    <li><a href="{{ path('app_accueil') }}" class="text-decoration-none">Accueil</a></li>
-                    <li><a href="{{ path('app_panier') }}" class="text-decoration-none">Panier</a></li>
+                    <li><a href="{{ path('app_accueil') }}" class="text-decoration-none">{{ 'footer.home'|trans }}</a></li>
+                    <li><a href="{{ path('app_panier') }}" class="text-decoration-none">{{ 'nav.cart'|trans }}</a></li>
                     <li><a href="{{ path('admin') }}" class="text-decoration-none">Admin</a></li>
                 </ul>
             </div>
@@ -34,12 +33,7 @@
         
         <div class="row align-items-center">
             <div class="col-md-6">
-                <p class="mb-0">&copy; {{ "now"|date("Y") }} Layrac Guitar Shop.</p>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <a href="#" class="text-decoration-none me-3">Mentions légales</a>
-                <a href="#" class="text-decoration-none me-3">CGV</a>
-                <a href="#" class="text-decoration-none">Politique de confidentialité</a>
+                <p class="mb-0">{{ 'footer.copyright'|trans }}</p>
             </div>
         </div>
     </div>
