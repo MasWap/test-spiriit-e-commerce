@@ -32,6 +32,8 @@ help:
 	@echo "│ make prod-restart    │ Redémarre l'application de production                                         │"
 	@echo "│ make prod-logs       │ Affiche les logs de production                                                │"
 	@echo "│ make prod-deploy     │ Met à jour et redéploie l'application                                         │"
+	@echo "│ make prod-db-init    │ Initialise la base de données de production                               │"
+	@echo "│ make prod-bash       │ Accède au conteneur de production                                          │"
 	@echo "│ make prod-clean      │ Nettoie les ressources de production                                       │"
 	@echo "└──────────────────────┴───────────────────────────────────────────────────────────────────────────────┘"
 
@@ -157,3 +159,14 @@ prod-deploy:
 prod-clean:
 	docker-compose -f compose.prod.yaml down -v --remove-orphans
 	docker system prune -f
+
+# Initialiser la base de données de production
+prod-db-init:
+	@echo "Initialisation de la base de données de production..."
+	docker exec spiriit-ecommerce-prod php bin/console doctrine:migrations:migrate --env=prod --no-interaction
+	docker exec spiriit-ecommerce-prod php bin/console doctrine:fixtures:load --env=prod --no-interaction
+	@echo "Base de données initialisée !"
+
+# Accéder au conteneur de production
+prod-bash:
+	docker exec -it spiriit-ecommerce-prod bash
