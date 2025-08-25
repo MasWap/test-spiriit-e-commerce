@@ -1,16 +1,8 @@
-
 services:
-  app:
-    build: .
-    container_name: layrac_guitar_shop
-    ports:
-      - "8080:80"
-    volumes:
-      - .:/var/www/html
-      - sqlite_data:/var/www/html/var
-    environment:
-      - APP_ENV=dev
-      - DATABASE_URL=sqlite:///var/www/html/var/data.db
-
-volumes:
-  sqlite_data:
+    php8-sf6:
+        container_name: php8-sf6
+        build: .
+        ports:
+            - "9000:8000"
+        volumes:
+            - ./:/var/www/html

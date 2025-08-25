@@ -1,30 +1,46 @@
-FROM php:8.1-fpm
+FROM php:8.1-cli
 
-# Installation des dépendances
-RUN apt-get update && apt-get install -y \
-    nginx \
-    sqlite3 \
-    libsqlite3-dev \
-    git \
-    unzip \
-    curl \
-    nodejs \
-    npm \
-    && docker-php-ext-install pdo pdo_sqlite
+# Install system dependencies
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        locales apt-utils git g++ unzip wget \
+        libicu-dev libpng-dev libxml2-dev libzip-dev libonig-dev libxslt-dev \
+        libpq-dev libsqlite3-dev \
+        nodejs npm \
+        apt-transport-https lsb-release ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
-# Installation de Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Locales
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
+    && echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen \
+    && locale-gen
 
-# Configuration Nginx
-COPY docker/nginx.conf /etc/nginx/sites-available/default
+# Composer
+RUN curl -sS https://getcomposer.org/installer | php -- \
+    && mv composer.phar /usr/local/bin/composer
 
-# Répertoire de travail
-WORKDIR /var/www/html
+# Symfony CLI (binaire stable depuis GitHub)
+RUN wget https://github.com/symfony-cli/symfony-cli/releases/latest/download/symfony-cli_linux_amd64.tar.gz \
+    && tar -xzf symfony-cli_linux_amd64.tar.gz \
+    && mv symfony /usr/local/bin/symfony \
+    && rm symfony-cli_linux_amd64.tar.gz
 
-# Script de démarrage
-COPY docker/start.sh /usr/local/bin/start.sh
-RUN chmod +x /usr/local/bin/start.sh
+# PHP extensions
+RUN docker-php-ext-configure intl \
+    && docker-php-ext-install \
+        pdo pdo_mysql pdo_pgsql pdo_sqlite \
+        opcache intl zip calendar dom mbstring gd xsl
 
-EXPOSE 80
+# APCu
+RUN pecl install apcu && docker-php-ext-enable apcu
 
-CMD ["/usr/local/bin/start.sh"]
+# Yarn
+RUN npm install --global yarn
+
+# Git identity (facultatif)
+RUN git config --global user.email "lilian.layrac@gmail.com" \
+    && git config --global user.name "MasWap"
+
+WORKDIR /var/www/html/
+
+CMD tail -f /dev/null

@@ -1,6 +1,0 @@
-# Configuration pour le développement
-services:
-  app:
-    environment:
-      - APP_ENV=dev
-      - APP_DEBUG=1
