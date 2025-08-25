@@ -29,7 +29,7 @@ RUN wget https://github.com/symfony-cli/symfony-cli/releases/latest/download/sym
 RUN docker-php-ext-configure intl \
     && docker-php-ext-install \
         pdo pdo_mysql pdo_pgsql pdo_sqlite \
-        opcache intl zip calendar dom mbstring gd xsl
+        opcache intl zip calendar dom mbstring gd xsl fileinfo
 
 # APCu
 RUN pecl install apcu && docker-php-ext-enable apcu

@@ -31,7 +31,11 @@
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-md-2 text-center">
-                                    <i class="fas fa-guitar fa-3x text-primary"></i>
+                                    {% if item.produit.photo %}
+                                        <img src="{{ '/images/products/' ~ item.produit.photo }}" alt="{{ item.produit.nom }}" class="img-fluid rounded" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                                    {% else %}
+                                        <i class="fas fa-guitar text-secondary" style="font-size: 8rem; margin-top: 120px;"></i>
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-4">
                                     <h6 class="mb-1 fw-bold">{{ item.produit.nom }}</h6>

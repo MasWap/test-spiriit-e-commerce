@@ -37,7 +37,11 @@
         <div class="col-lg-4 col-md-6">
             <div class="card h-100 shadow-sm hover-card">
                 <div class="card-img-top bg-light d-flex align-items-center justify-content-center product-card-image">
-                    <i class="fas fa-guitar text-secondary"></i>
+                    {% if produit.photo %}
+                        <img src="{{ '/images/products/' ~ produit.photo }}" alt="{{ produit.nom }}" class="img-fluid rounded" style="max-height: 200px; object-fit: cover;">
+                    {% else %}
+                        <i class="fas fa-guitar text-muted" style="font-size: 4rem;"></i>
+                    {% endif %}
                 </div>
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ produit.nom }}</h5>
