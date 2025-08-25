@@ -7,6 +7,7 @@ help:
 	@echo "┌──────────────────────┬───────────────────────────────────────────────────────────────────────────────┐"
 	@echo "│ Commande             │ Description                                                                   │"
 	@echo "├──────────────────────┼───────────────────────────────────────────────────────────────────────────────┤"
+	@echo "│ DÉVELOPPEMENT        │                                                                               │"
 	@echo "│ make help            │ Affiche les commandes                                                         │"
 	@echo "│ make start           │ Build, démarre les conteneurs, installe les dépendances, migrations, fixtures │"
 	@echo "│ make stop            │ Arrête les conteneurs                                                         │"
@@ -24,6 +25,14 @@ help:
 	@echo "│ make test-unit       │ Lance uniquement les tests unitaires                                          │"
 	@echo "│ make test-func       │ Prépare et lance les tests fonctionnels                                       │"
 	@echo "│ make csv-export      │ Exporte les produits au format CSV                                            │"
+	@echo "├──────────────────────┼───────────────────────────────────────────────────────────────────────────────┤"
+	@echo "│ PRODUCTION           │                                                                               │"
+	@echo "│ make prod-start      │ Démarre l'application en mode PRODUCTION                                      │"
+	@echo "│ make prod-stop       │ Arrête l'application de production                                            │"
+	@echo "│ make prod-restart    │ Redémarre l'application de production                                         │"
+	@echo "│ make prod-logs       │ Affiche les logs de production                                                │"
+	@echo "│ make prod-deploy     │ Met à jour et redéploie l'application                                         │"
+	@echo "│ make prod-clean      │ Nettoie les ressources de production                                      │"
 	@echo "└──────────────────────┴───────────────────────────────────────────────────────────────────────────────┘"
 
 start:
@@ -111,3 +120,40 @@ test-func:
 # Export des produits au format CSV
 csv-export:
 	docker exec -it $(PHP_CONTAINER) php bin/console app:export-produits
+
+# =================== COMMANDES PRODUCTION ===================
+
+# Démarrer l'application en production
+prod-start:
+	@echo "Démarrage de l'application en mode PRODUCTION..."
+	docker-compose -f compose.prod.yaml build --no-cache
+	docker-compose -f compose.prod.yaml up -d
+
+# Arrêter l'application de production
+prod-stop:
+	@echo "Arrêt de l'application de production..."
+	docker-compose -f compose.prod.yaml down
+
+# Redémarrer l'application de production
+prod-restart:
+	@echo "Redémarrage de l'application de production..."
+	docker-compose -f compose.prod.yaml down
+	docker-compose -f compose.prod.yaml up -d
+
+# Voir les logs de production
+prod-logs:
+	docker-compose -f compose.prod.yaml logs -f
+
+# Mise à jour de l'application en production
+prod-deploy:
+	@echo "Déploiement de la nouvelle version..."
+	git pull
+	docker-compose -f compose.prod.yaml down
+	docker-compose -f compose.prod.yaml build --no-cache
+	docker-compose -f compose.prod.yaml up -d
+	@echo "Déploiement terminé !"
+
+# Nettoyer les ressources de production
+prod-clean:
+	docker-compose -f compose.prod.yaml down -v --remove-orphans
+	docker system prune -f

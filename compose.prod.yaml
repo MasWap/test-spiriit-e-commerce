@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: spiriit-ecommerce-prod
+    ports:
+      - "80:80"
+    environment:
+      - APP_ENV=prod
+      - APP_DEBUG=0
+    volumes:
+      - ./var:/var/www/html/var
+      - ./public/uploads:/var/www/html/public/uploads
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

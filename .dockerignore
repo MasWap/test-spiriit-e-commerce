@@ -1,0 +1,41 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+PRODUCTION.md
+*.md
+
+# Développement
+.env.local
+.env.dev
+docker-compose.yaml
+compose.yaml
+Dockerfile
+
+# Cache et logs de développement
+var/cache/dev/
+var/log/dev.log
+var/test.db
+
+# Node modules (on les installe dans le build)
+node_modules/
+
+# Tests
+tests/
+phpunit.xml.dist
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
