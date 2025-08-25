@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-lg-8">
                 <h2 class="mb-4">
-                    <i class="fas fa-shopping-cart me-2"></i>Mon Panier
+                    <i class="fas fa-shopping-cart me-2"></i>{{ 'cart.cart'|trans }}
                 </h2>
                 <!-- Liste des articles dans le panier -->
                 {% for item in items %}
@@ -39,10 +39,10 @@
                                 </div>
                                 <div class="col-md-4">
                                     <h6 class="mb-1 fw-bold">{{ item.produit.nom }}</h6>
-                                    <p class="text-muted mb-0">Prix unitaire : {{ item.produit.prix|number_format(2, ',', ' ') }} €</p>
+                                    <p class="text-muted mb-0">{{ 'cart.unit_price'|trans }} : {{ item.produit.prix|number_format(2, ',', ' ') }} €</p>
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label small text-muted">Quantité</label>
+                                    <label class="form-label small text-muted">{{ 'cart.quantity'|trans }}</label>
                                     <!-- Formulaire pour modifier la quantité et actualiser le panier -->
                                     <form method="post" action="{{ path('app_panier_modifier', {id: item.produit.id}) }}" class="d-inline">
                                         <div class="input-group input-group-sm" style="width: 120px;">
@@ -60,7 +60,7 @@
                                     </form>
                                 </div>
                                 <div class="col-md-2 text-center">
-                                    <p class="text-muted small mb-0">Sous-total</p>
+                                    <p class="text-muted small mb-0">{{ 'cart.subtotal'|trans }} :</p>
                                     <strong class="fs-5 text-success">{{ item.sousTotal|number_format(2, ',', ' ') }} €</strong>
                                 </div>
                                 <div class="col-md-1 text-end">
@@ -84,13 +84,13 @@
                         <form method="post" action="{{ path('app_panier_vider') }}" class="d-inline">
                             <button type="submit" class="btn btn-outline-danger"
                                     onclick="return confirm('Êtes-vous sûr de vouloir vider votre panier ?')">
-                                <i class="fas fa-trash me-2"></i>Vider le panier
+                                <i class="fas fa-trash me-2"></i>{{ 'cart.empty_cart'|trans }}
                             </button>
                         </form>
                     </div>
                     <div>
                         <a href="{{ path('app_accueil') }}" class="btn btn-outline-primary">
-                            <i class="fas fa-arrow-left me-2"></i>Continuer mes achats
+                            <i class="fas fa-arrow-left me-2"></i>{{ 'cart.continue_shopping'|trans }}
                         </a>
                     </div>
                 </div>
@@ -101,24 +101,24 @@
                 <div class="card sticky-top shadow">
                     <div class="card-header bg-primary text-white">
                         <h5 class="mb-0">
-                            <i class="fas fa-calculator me-2"></i>Récapitulatif
+                            <i class="fas fa-calculator me-2"></i>{{ 'cart.summary'|trans }}
                         </h5>
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Sous-total :</span>
+                            <span>{{ 'cart.subtotal'|trans }} :</span>
                             <span>{{ total|number_format(2, ',', ' ') }} €</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Livraison :</span>
+                            <span>{{ 'cart.shipping'|trans }} :</span>
                             <!-- Frais de livraison offerts si le panier dépasse 5000 € -->
                             {% if total >= 5000 %}
-                            <span class="text-success fw-bold">Gratuite</span>
+                            <span class="text-success fw-bold">{{ 'cart.free'|trans }}</span>
                             {% else %}
                             <span class="text-danger fw-bold">+ 120,00 €</span>
                             {% endif %}
                         </div>
-                        <small><i>(Livraison gratuite à partir de 5000 €)</i></small>
+                        <small><i>({{ 'cart.free_shipping_note'|trans }})</i></small>
                         <hr>
                         <div class="d-flex justify-content-between mb-3">
                             <strong class="fs-5">Total :</strong>
@@ -126,7 +126,7 @@
                             <strong class="fs-4 text-success">{{ totalAvecLivraison|number_format(2, ',', ' ') }} €</strong>
                         </div>
                         <button class="btn btn-success w-100 btn-lg">
-                            <i class="fas fa-credit-card me-2"></i>Procéder au paiement
+                            <i class="fas fa-credit-card me-2"></i>{{ 'cart.payment'|trans }}
                         </button>
                     </div>
                 </div>

@@ -31,13 +31,20 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-globe me-1"></i>
-                            {% if app.request.locale == 'fr' %}🇫🇷 FR{% else %}🇬🇧 EN{% endif %}
+                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-globe me-1"></i>Langue
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ path('app_change_language', {locale: 'fr'}) }}">🇫🇷 Français</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_change_language', {locale: 'en'}) }}">🇬🇧 English</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="languageDropdown" style="z-index: 9999;">
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_change_language', {locale: 'fr'}) }}">
+                                    Français 🇫🇷
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_change_language', {locale: 'en'}) }}">
+                                    English 🇬🇧
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>

@@ -28,6 +28,17 @@ cart:
   empty_cart: "Votre panier est vide"
   description: "Découvrez notre collection exclusive de guitares signatures"
   discover: "Découvrir nos guitares"
+  cart: "Mon panier"
+  summary: "Récapitulatif"
+  quantity: "Quantité"
+  shipping: "Livraison"
+  free: "Gratuite"
+  free_shipping_note: "Livraison gratuite à partir de 5000€"
+  empty_basket: "Vider le panier"
+  continue_shopping: "Continuer mes achats"
+  payment: "Procéder au paiement"
+  subtotal: "Sous-total"
+  unit_price: "Prix unitaire"
   
 breadcrumb:
   collection: "Collection"

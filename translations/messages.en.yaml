@@ -28,10 +28,21 @@ cart:
   empty_cart: "Your cart is empty"
   description: "Discover our exclusive collection of signature guitars"
   discover: "Discover our guitars"
+  cart: "My cart"
+  summary: "Summary"
+  quantity: "Quantity"
+  shipping: "Shipping"
+  free: "Free"
+  free_shipping_note: "Free shipping (from €5000)"
+  empty_basket: "Empty the basket"
+  continue_shopping: "Continue shopping"
+  payment: "Proceed to payment"
+  subtotal: "Subtotal"
+  unit_price: "Unit price"
   
 breadcrumb:
   collection: "Collection"
-  
+
 footer:
   description: "Your specialty store for signature guitars from the greatest artists. Discover our exceptional collection of legendary instruments at attractive prices."
   home: "Home"
