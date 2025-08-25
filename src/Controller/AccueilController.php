@@ -27,4 +27,12 @@ final class AccueilController extends AbstractController
             'produit' => $produit,
         ]);
     }
+
+    #[Route('/json', name: 'app_produit_json_all')]
+    public function jsonAll(ProduitRepository $produitRepository): Response
+    {
+        $produits = $produitRepository->findAll();
+
+        return $this->json($produits);
+    }
 }
