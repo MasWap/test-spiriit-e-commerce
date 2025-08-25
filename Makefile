@@ -164,7 +164,7 @@ prod-clean:
 prod-db-init:
 	@echo "Initialisation de la base de données de production..."
 	docker exec spiriit-ecommerce-prod php bin/console doctrine:migrations:migrate --env=prod --no-interaction
-	docker exec spiriit-ecommerce-prod php bin/console doctrine:fixtures:load --env=prod --no-interaction
+	docker exec spiriit-ecommerce-prod php bin/console app:init-prod-data --env=prod
 	@echo "Base de données initialisée !"
 
 # Accéder au conteneur de production
