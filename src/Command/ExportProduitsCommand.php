@@ -72,7 +72,7 @@ class ExportProduitsCommand extends Command
         }
         
         // Ajout de l'en-tête CSV
-        fputcsv($file, ['ID', 'Nom', 'Description', 'Prix (€)'], ';');
+        fputcsv($file, ['ID', 'Nom', 'Description', 'Prix (€)', 'Photo'], ';');
         
         // Ajout des données
         foreach ($produits as $produit) {
@@ -80,7 +80,8 @@ class ExportProduitsCommand extends Command
                 $produit->getId(),
                 $produit->getNom(),
                 $produit->getDescription() ?? '',
-                number_format($produit->getPrix(), 2, ',', ' ')
+                number_format($produit->getPrix(), 2, ',', ' '),
+                $produit->getPhoto() ?? ''
             ], ';');
         }
         

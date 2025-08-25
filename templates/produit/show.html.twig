@@ -20,7 +20,11 @@
         <!-- Image du produit -->
         <div class="col-md-6">
             <div class="product-image-container bg-light rounded p-4 text-center" style="height: 500px;">
-                <i class="fas fa-guitar text-secondary" style="font-size: 8rem; margin-top: 120px;"></i>
+                {% if produit.photo %}
+                    <img src="{{ '/images/products/' ~ produit.photo }}" alt="{{ produit.nom }}" class="img-fluid rounded" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                {% else %}
+                    <i class="fas fa-guitar text-secondary" style="font-size: 8rem; margin-top: 120px;"></i>
+                {% endif %}
             </div>
         </div>
 
