@@ -8,8 +8,8 @@ import './styles/app.scss';
 import 'bootstrap';
 
 // Import our custom JS modules
-import './js/product';
-import './js/cart';
+import './js/product.js';
+import './js/cart.js';
 
 // Initialisation quand le DOM est chargé
 document.addEventListener('DOMContentLoaded', function() {

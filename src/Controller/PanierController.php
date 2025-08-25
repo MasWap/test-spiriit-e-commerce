@@ -40,7 +40,6 @@ class PanierController extends AbstractController
         $produit = $produitRepository->find($id);
         
         if (!$produit) {
-            $this->addFlash('error', 'Produit non trouvé');
             return $this->redirectToRoute('app_accueil');
         }
 
@@ -65,8 +64,6 @@ class PanierController extends AbstractController
 
         $entityManager->flush();
 
-        $this->addFlash('success', 'Produit ajouté au panier avec succès !');
-
         return $this->redirectToRoute('app_produit_show', ['id' => $id]);
     }
 
@@ -82,7 +79,6 @@ class PanierController extends AbstractController
         $item = $panierRepository->findItemBySessionAndProduct($sessionId, $id);
 
         if (!$item) {
-            $this->addFlash('error', 'Item non trouvé dans le panier');
             return $this->redirectToRoute('app_panier');
         }
 
@@ -95,8 +91,6 @@ class PanierController extends AbstractController
         }
 
         $entityManager->flush();
-
-        $this->addFlash('success', 'Panier mis à jour');
 
         return $this->redirectToRoute('app_panier');
     }
@@ -114,7 +108,6 @@ class PanierController extends AbstractController
         if ($item) {
             $entityManager->remove($item);
             $entityManager->flush();
-            $this->addFlash('success', 'Produit supprimé du panier');
         }
 
         return $this->redirectToRoute('app_panier');
@@ -134,8 +127,6 @@ class PanierController extends AbstractController
         }
 
         $entityManager->flush();
-
-        $this->addFlash('success', 'Panier vidé');
 
         return $this->redirectToRoute('app_panier');
     }
