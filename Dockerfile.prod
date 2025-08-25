@@ -36,8 +36,8 @@ WORKDIR /var/www/html
 # Copy composer files first for better Docker layer caching
 COPY composer.json composer.lock ./
 
-# Install PHP dependencies (production only)
-RUN composer install --no-dev --optimize-autoloader --no-scripts
+# Install PHP dependencies (including dev for fixtures)
+RUN composer install --optimize-autoloader --no-scripts
 
 # Copy package files
 COPY package.json package-lock.json ./
@@ -69,6 +69,9 @@ RUN php bin/console doctrine:migrations:migrate --env=prod --no-interaction \
     && php bin/console doctrine:fixtures:load --env=prod --no-interaction \
     && php bin/console cache:clear --env=prod \
     && php bin/console cache:warmup --env=prod
+
+# Clean dev dependencies after setup to reduce image size
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 EXPOSE 80
 
