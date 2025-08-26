@@ -24,6 +24,7 @@ services:
     # please note that last definitions always *replace* previous ones
     
     App\Command\InitProdDataCommand:
+        tags: ['console.command']
         arguments:
-            $entityManager: '@doctrine.orm.entity_manager'
-            $passwordHasher: '@security.user_password_hasher'
+            - '@doctrine.orm.entity_manager'
+            - '@security.user_password_hasher'

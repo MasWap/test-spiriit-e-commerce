@@ -18,10 +18,15 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 )]
 class InitProdDataCommand extends Command
 {
+    private EntityManagerInterface $entityManager;
+    private UserPasswordHasherInterface $passwordHasher;
+
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private UserPasswordHasherInterface $passwordHasher
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $passwordHasher
     ) {
+        $this->entityManager = $entityManager;
+        $this->passwordHasher = $passwordHasher;
         parent::__construct();
     }
 
