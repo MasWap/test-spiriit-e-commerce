@@ -3,12 +3,14 @@
 namespace App\Command;
 
 use App\Entity\Produit;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[AsCommand(
     name: 'app:init-prod-data',
@@ -16,15 +18,41 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class InitProdDataCommand extends Command
 {
+    private EntityManagerInterface $entityManager;
+    private UserPasswordHasherInterface $passwordHasher;
+
     public function __construct(
-        private EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $passwordHasher
     ) {
+        $this->entityManager = $entityManager;
+        $this->passwordHasher = $passwordHasher;
         parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+
+        $io->note('Initialisation des données de production...');
+
+        // Créer l'utilisateur admin s'il n'existe pas
+        $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['username' => 'admin']);
+        if (!$existingUser) {
+            $user = new User();
+            $user->setUsername('admin');
+            $user->setRoles(['ROLE_ADMIN']);
+            
+            $hashedPassword = $this->passwordHasher->hashPassword($user, 'password');
+            $user->setPassword($hashedPassword);
+
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+            
+            $io->success('Utilisateur admin créé (admin/password)');
+        } else {
+            $io->note('Utilisateur admin existe déjà');
+        }
 
         // Vérifier si des produits existent déjà
         $existingProducts = $this->entityManager->getRepository(Produit::class)->count([]);
@@ -125,7 +153,7 @@ class InitProdDataCommand extends Command
         $this->entityManager->flush();
 
         $io->success('Données de production initialisées avec succès !');
-        $io->note(sprintf('%d produits créés.', count($produits)));
+        $io->note(sprintf('%d produits créés + utilisateur admin (admin/password)', count($produits)));
 
         return Command::SUCCESS;
     }
