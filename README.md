@@ -27,7 +27,13 @@ L'application comprends :
 - Node.js et npm
 - Extension SQLite, Intl, fileinfo pour PHP
 
-## Installation du projet
+## Information
+
+##### Vous disposez d'une version de l'application déployé en production sur mon serveur proxmox à l'adresse suivante :
+
+#### https://test-spiriit.lilol.ovh/
+
+## Installation du projet (Développement)
 
 ### 1. Cloner le dépôt
 
@@ -36,7 +42,9 @@ git clone <url-du-depot>
 cd test-spiriit-e-commerce
 ```
 
-### 1.1. Déploiement automatique avec Docker et le Makefile
+## Déploiement automatique
+
+### 1.1. Exécuter la commande make start pour déployer automatiquement l'application via Docker et le makefile
 
 ```bash
 make start
@@ -46,7 +54,9 @@ make start
 
 #### http://localhost:9000
 
-### SINON | 2. Installer les dépendances PHP
+## Déploiement manuel
+
+### 2. Installer les dépendances PHP
 
 ```bash
 composer install
