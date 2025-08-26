@@ -80,10 +80,8 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html \
     && chmod -R 777 var/
 
-# Run Symfony commands for production
-RUN (php bin/console doctrine:migrations:migrate --env=prod --no-interaction || echo "No migrations to run") \
-    && php bin/console app:init-prod-data --env=prod \
-    && php bin/console cache:clear --env=prod \
+# Clear cache for production (minimal setup)
+RUN php bin/console cache:clear --env=prod \
     && php bin/console cache:warmup --env=prod
 
 EXPOSE 80
