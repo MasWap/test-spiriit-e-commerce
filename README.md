@@ -98,7 +98,7 @@ npm run watch
 symfony server:start
 ```
 
-L'application sera disponible sur `https://127.0.0.1:9000`
+L'application sera disponible sur `https://127.0.0.1:8000`
 
 ### Avec le serveur PHP intégré (si vous ne disposez pas du Symfony CLI)
 

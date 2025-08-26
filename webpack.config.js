@@ -56,8 +56,18 @@ Encore
         config.corejs = '3.38';
     })
 
-    // enables Sass/SCSS support
-    .enableSassLoader()
+    // enables Sass/SCSS support avec suppression complète des warnings
+    .enableSassLoader((options) => {
+        // Configuration pour supprimer tous les warnings de dépréciation
+        options.sassOptions = {
+            quietDeps: true, // Supprime les warnings des dépendances
+            silenceDeprecations: ['legacy-js-api', 'import'] // Supprime les warnings spécifiques
+        };
+        // Utiliser l'API moderne si disponible
+        if (options.implementation && options.implementation.info && options.implementation.info.includes('dart-sass')) {
+            options.api = 'modern';
+        }
+    })
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
