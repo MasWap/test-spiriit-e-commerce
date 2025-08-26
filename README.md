@@ -169,6 +169,7 @@ assets/
 └── js/                      # Modules JavaScript
 
 src/
+├── Command/                 # Commandes Symfony
 ├── Controller/              # Contrôleurs Symfony
 │   ├── AccueilController.php
 │   └── PanierController.php
@@ -176,17 +177,24 @@ src/
 ├── Entity/                  # Entités Doctrine
 │   ├── Produit.php
 │   └── Panier.php
+├── EventListener/           # Écouteurs d'événements Symfony
 ├── Repository/              # Repositories Doctrine
+├── Security/                # Gestion de la sécurité
 └── Twig/                    # Extensions Twig
 
 templates/
 ├── accueil/                 # Templates de l'accueil
+├── admin/                   # Templates de l'administration
 ├── panier/                  # Templates du panier
 ├── partials/                # Composants réutilisables (header & footer)
 ├── produit/                 # Templates du produit
-├── base.html.twig           # Template de base
+├── security/                # Templates de la login
+└── base.html.twig           # Template de base
 
 tests/
 ├── Unit/                    # Tests unitaires
 └── Functional/              # Tests fonctionnels
-```
+
+translation/
+├── messages.fr.yaml         # Traductions en français
+└── messages.en.yaml         # Traductions en anglais
