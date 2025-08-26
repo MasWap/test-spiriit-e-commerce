@@ -2,11 +2,17 @@
 
 ### Application e-commerce développée avec Symfony 6.4 pour la vente de guitares signatures.
 
-L'application comprends :
+#### L'application comprends :
 - Un catalogue de produits
 - Une page détaillée pour chaque produit
 - Un système de panier (Stocké en session)
+- Un système d'authentification pour administrateur (login/logout)
+- Une interface d'administration (CRUD pour les produits)
+- Une traduction complète (français/anglais)
 - Une interface responsive utilisant Bootstrap
+- Un déploiement automatisé avec Docker
+- Des tests complets
+- Une documentation complète
 
 ## Informations sur l'application
 
@@ -18,6 +24,16 @@ L'application comprends :
 - **FontAwesome 6** - Icônes
 - **PHPUnit** - Tests unitaires et fonctionnels
 - **SCSS** - Préprocesseur CSS
+
+## Liens utiles
+
+### Dépot Github
+
+#### https://github.com/MasWap/test-spiriit-e-commerce
+
+### Kanban et suivie complet du projet
+
+#### https://github.com/users/MasWap/projects/2
 
 ## Prérequis
 
