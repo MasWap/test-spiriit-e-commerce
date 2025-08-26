@@ -36,13 +36,17 @@ git clone <url-du-depot>
 cd test-spiriit-e-commerce
 ```
 
-### 1.1 Déploiement automatique avec Docker et le Makefile
+### 1.1. Déploiement automatique avec Docker et le Makefile
 
 ```bash
 make start
 ```
 
-### SINON 2 Installer les dépendances PHP
+### 1.2. Une fois le déploiement terminé, rendez-vous sur :
+
+#### http://localhost:9000
+
+### SINON | 2. Installer les dépendances PHP
 
 ```bash
 composer install
@@ -54,29 +58,19 @@ composer install
 npm install
 ```
 
-### 4. Configuration de l'environnement
-
-Copiez le fichier `.env` vers `.env.local` et adaptez la configuration si nécessaire :
-
-```bash
-cp .env .env.local
-```
-
-La configuration par défaut utilise SQLite avec le fichier `var/data_dev.db`.
-
-### 5. Créer la base de données
+### 4. Créer la base de données
 
 ```bash
 php bin/console doctrine:database:create
 ```
 
-### 6. Appliquer les migrations
+### 5. Appliquer les migrations
 
 ```bash
 php bin/console doctrine:migrations:migrate
 ```
 
-## Charger les fixtures
+## 6. Charger les fixtures
 
 Pour charger les données de démonstration (12 produits) :
 
@@ -86,13 +80,7 @@ php bin/console doctrine:fixtures:load
 
 **Attention** : Cette commande supprime toutes les données existantes et recharge les fixtures.
 
-## Compiler les assets
-
-### Compilation unique (production)
-
-```bash
-npm run build
-```
+## 7. Compiler les assets
 
 ### Compilation en mode développement ou watch pour le hot reload
 
@@ -102,7 +90,7 @@ ou
 npm run watch
 ```
 
-## Lancer le projet
+## 8. Lancer le projet
 
 ### Avec le serveur Symfony CLI (recommandé)
 
@@ -110,17 +98,17 @@ npm run watch
 symfony server:start
 ```
 
-L'application sera disponible sur `https://127.0.0.1:8000`
+L'application sera disponible sur `https://127.0.0.1:9000`
 
 ### Avec le serveur PHP intégré (si vous ne disposez pas du Symfony CLI)
 
 ```bash
-php -S localhost:8000 -t public/
+php -S localhost:9000 -t public/
 ```
 
-L'application sera disponible sur `http://localhost:8000`
+L'application sera disponible sur `http://localhost:9000`
 
-## Jouer les tests
+## 9. Jouer les tests
 
 ### Préparer l'environnement de test
 
@@ -139,7 +127,7 @@ php bin/console doctrine:migrations:migrate --env=test --no-interaction
 php bin/console doctrine:fixtures:load --env=test --no-interaction
 ```
 
-### Exécuter les tests
+### 10. Exécuter les tests
 
 **Tous les tests :**
 ```bash
@@ -191,19 +179,4 @@ templates/
 tests/
 ├── Unit/                    # Tests unitaires
 └── Functional/              # Tests fonctionnels
-```
-
-## Commandes utiles
-
-### Base de données
-
-```bash
-# Voir le statut des migrations
-php bin/console doctrine:migrations:status
-
-# Remettre à zéro la base de données
-php bin/console doctrine:database:drop --force
-php bin/console doctrine:database:create
-php bin/console doctrine:migrations:migrate
-php bin/console doctrine:fixtures:load
 ```
